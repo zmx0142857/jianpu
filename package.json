@@ -40,8 +40,8 @@
   ],
   "scripts": {
     "test": "vitest --run",
-    "build": "nearleyc src/parser.ne -o src/grammar.js && node src/after-build.js && tsup",
-    "nearley": "nearleyc src/parser.ne -o src/grammar.js && node src/after-build.js",
+    "build": "nearleyc src/grammar.ne -o src/grammar.js && node src/after-build.js && tsup",
+    "nearley": "nearleyc src/grammar.ne -o src/grammar.js && node src/after-build.js",
     "cov": "vitest --run --coverage"
   },
   "devDependencies": {
