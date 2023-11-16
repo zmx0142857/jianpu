@@ -20,13 +20,6 @@ const passedExamples: Example[] = [
   </div>
 </div>`
   },
-]
-
-// no idea why this fails ˉ\_(ツ)_/ˉ
-const whyThisFails: Example[] = [
-]
-
-const todoExamples: Example[] = [
   {
     input: "(4'1,) (4''(1,,)) ((3'''(7,,, ))) (3'7) |",
     html: nonewline`
@@ -51,6 +44,13 @@ const todoExamples: Example[] = [
   </div>
 </div>`
   },
+]
+
+// no idea why this fails ˉ\_(ツ)_/ˉ
+const whyThisFails: Example[] = [
+]
+
+const todoExamples: Example[] = [
 ]
 
 export const examples: Example[] = [
