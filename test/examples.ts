@@ -8,7 +8,9 @@ const $ = String.raw
 const nonewline = (arr: TemplateStringsArray) => [...arr].map(str => str.replace(/\n\s*/g, '')).join('')
 
 const passedExamples: Example[] = [
-  { input: "(4'1,)", html: nonewline`
+  {
+    input: "(#4'1,)",
+    html: nonewline`
 <div class="jianpu">
   <div class="jianpu-bar">
     <div class="jianpu-group">
@@ -25,7 +27,9 @@ const whyThisFails: Example[] = [
 ]
 
 const todoExamples: Example[] = [
-  { input: "(4'1,) (4''(1,,)) ((3'''(7,,, ))) (3'7) |", html: nonewline`
+  {
+    input: "(4'1,) (4''(1,,)) ((3'''(7,,, ))) (3'7) |",
+    html: nonewline`
 <div class="jianpu">
   <div class="jianpu-bar">
     <div class="jianpu-group">
@@ -50,7 +54,7 @@ const todoExamples: Example[] = [
 ]
 
 export const examples: Example[] = [
-  ...passedExamples,
-  // ...todoExamples,
+  // ...passedExamples,
+  ...todoExamples,
   // ...whyThisFails,
 ]

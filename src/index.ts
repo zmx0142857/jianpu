@@ -2,13 +2,14 @@ import Nearley from 'nearley'
 import initGrammar from './grammar.js'
 import initLexer from './lexer.js'
 import initHtml from './to-html.js'
+import { Vdom } from './vdom.js'
 
 export type Ast = any
 
 class Jianpu {
   public lexer: Nearley.Lexer
   public parser: Nearley.Parser
-  private genHtml: ((ast: Ast) => string)
+  private genHtml: ((ast: Ast) => Vdom)
   private initState: { [key: string]: any; lexerState: Nearley.LexerState }
   constructor() {
     const lexer = this.lexer = initLexer()
@@ -28,12 +29,16 @@ class Jianpu {
       console.dir(this.parser.results, { depth: 10 })
       throw new Error('ambiguous parse')
     }
+    return this.parser.results[0]
   }
 
   public toHtml(code: string): string {
     this.parser.restore(this.initState)
-    this.parse(code)
-    return this.genHtml(this.parser.results)
+    const ast = this.parse(code)
+    // console.dir(ast, { depth: 10 })
+    const str = this.genHtml(ast).toString()
+    console.log(str)
+    return str
   }
 }
 
