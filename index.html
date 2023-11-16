@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jianpu Playground</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+
+<h1>简谱</h1>
+<div class="p-html-output"></div>
+<textarea class="p-input" rows="5" cols="60" placeholder="Input jianpu here..."></textarea>
+<textarea class="p-str-output" rows="10" cols="60"></textarea>
+
+<script type="module">
+import { Jianpu } from './dist/index.js'
+const jianpu = new Jianpu()
+const $ = el => document.querySelector(el)
+const input = $('.p-input')
+const strOutput = $('.p-str-output')
+const htmlOutput = $('.p-html-output')
+let timer
+
+const transform = (value) => {
+  const html = jianpu.toHtml(value)
+  strOutput.innerText = html
+  htmlOutput.innerHTML = html
+}
+
+const main = () => {
+  input.value = "(5,5,) | 6, 5, 1 | 7, - (5,5,) | 6, 5, 2 | 1 - (5,5,) |\n5 3 1 | 7, 6, (44)| 3 1 2 | 1 --"
+  transform(input.value)
+  input.addEventListener('input', (e) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      transform(e.target.value)
+    }, 500)
+  })
+}
+
+main()
+</script>
+</body>
+</html>

@@ -4,7 +4,19 @@ Simple music markup language.
 
 > This repo is under construction.
 
-Example:
+## Quick start
+
+    $ cd jianpu
+    $ pnpm i       # install dependencies
+    $ pnpm nearley # generate grammar file
+    $ pnpm build   # build jianpu.js
+
+    $ pnpm i -g serve     # install a local static server
+    $ serve -L -l 1234 &  # start server
+
+Open browser at `http://localhost:1234` and try it yourself!
+
+## Examples
 
 ```text
 title { "Some Music" }

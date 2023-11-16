@@ -59,11 +59,27 @@ const initHtml = () => {
       if (paren > 1) return 'ul' + paren
       return ''
     }
-    return new Vdom({
+    const dot = '.'.repeat(ast.dot || 0)
+    const dash = '-'.repeat(ast.dash || 0).split('').join(' ')
+    const note = new Vdom({
       tag: 'span',
       attr: { class: clsx('jianpu-note', octaveClass(ast.octave), ulClass(options.paren)) },
-      children: ast.value,
+      children: ast.value
     })
+    if (dot || dash) {
+      return new Vdom({
+        tag: '',
+        children: [
+          note,
+          {
+            tag: 'span',
+            attr: { class: clsx('jianpu-note', ulClass(options.paren)) },
+            children: dot || dash,
+          },
+        ]
+      })
+    }
+    return note
   }
 
   /**

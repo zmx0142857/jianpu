@@ -15,7 +15,15 @@ function processParen (d) {
   return d[2].map(v => v[0][0])
 }
 function processNote (d) {
-  return { ...d[1], type: 'note', tilde: !!d[0], dotDash: d[2] && d[2][0] }
+  const res = { ...d[1], type: 'note', tilde: !!d[0] }
+  const dotDash = d[2] && d[2][0][1]
+  if (dotDash) {
+    if (dotDash[0].type === 'dot')
+      res.dot = dotDash.length // 附点数
+    else if (dotDash[0].type === 'dash')
+      res.dash = dotDash.length // 横杠数
+  }
+  return res
 }
 function processPitch (d) {
   return {
@@ -36,17 +44,18 @@ piece -> (bar _):+ {% processPiece %}
   | (bar _):* lastBar {% processPiece2 %}
 
 # 小节
-bar -> (group _):+ %bar {% processBar %}
+bar -> lastBar %bar {% id %}
 lastBar -> (group _):+ {% processBar %}
 
 # 节奏组
-group -> note | paren {% processGroup %}
+group -> note {% id %}
+  | paren {% processGroup %}
 
 # 括号组
 paren -> %lparen _ ((note | paren) _):+ %rparen {% processParen %}
 
 # 音符
-note -> (%tilde _):? pitch ((_ %dot) | (_ %dash)):? {% processNote %}
+note -> (%tilde _):? pitch ((_ %dot:+) | (_ %dash:+)):? {% processNote %}
 
 # 音高
 pitch -> (%sharp | %flat):? %note_name (%hi_octave:+ | %lo_octave:+):? {% processPitch %}
