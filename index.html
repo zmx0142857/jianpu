@@ -16,8 +16,8 @@
 <div class="p-drawer">
   <button class="p-drawer-btn">三</button>
   <div class="p-drawer-group">
-    <textarea class="p-textarea p-input" rows="8" cols="60" placeholder="Input jianpu here..."></textarea>
-    <textarea class="p-textarea p-str-output" rows="8" cols="60" style="display:none"></textarea>
+    <textarea class="p-textarea p-input" rows="8" cols="60" placeholder="输入简谱..."></textarea>
+    <textarea class="p-textarea p-str-output" rows="8" cols="60" disabled style="display:none"></textarea>
     <button class="btn p-print-btn" style="display:none">打印</button>
   </div>
 </div>
@@ -42,7 +42,8 @@ const render = (value) => {
     strOutput.style.display = 'none'
   } catch (err) {
     console.error(err)
-    const index = err.message.indexOf(' Instead,')
+    let index = err.message.indexOf(' Instead,')
+    if (index === -1) index = undefined
     strOutput.value = err.message.slice(0, index)
     strOutput.style.display = 'block'
   }

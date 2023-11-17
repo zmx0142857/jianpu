@@ -1,3 +1,4 @@
+/* basic */
 * {
   box-sizing: border-box;
 }
@@ -19,14 +20,48 @@ body {
   color: var(--fg);
   background: var(--bg);
   padding: 2rem 5%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   box-shadow: 0 0 10px 0 var(--bd2);
 }
+
+/* components */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 2px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: var(--primary);
+  color: var(--fg2);
+  border: none;
+}
+html {
+  /* firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  background-clip: padding-box;
+  border-radius: 5px;
+  min-height: 28px;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+
+/* page */
 h1, .p-subtitle {
   text-align: center;
 }
 .p-drawer {
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -77,18 +112,6 @@ h1, .p-subtitle {
   border-radius: 4px;
   outline: var(--secondary) 1px solid;
   outline-offset: -1px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 16px;
-  border-radius: 2px;
-  font-size: 14px;
-  cursor: pointer;
-  background-color: var(--primary);
-  color: var(--fg2);
-  border: none;
 }
 .p-print-btn {
   position: absolute;
