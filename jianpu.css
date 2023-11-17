@@ -17,6 +17,7 @@
 .jianpu-note {
   position: relative;
   padding: 0 .1em;
+  line-height: 1.4em;
 }
 
 /* 下划线 */
@@ -82,4 +83,42 @@
 }
 .jianpu-note.lo3::before {
   bottom: -1.3em;
+}
+
+/* 延音线 */
+.jianpu-note > [class^=tilde] {
+  position: absolute;
+  top: -0.85em;
+}
+.jianpu-note.hi > [class^=tilde] {
+  top: -1.1em;
+}
+.jianpu-note.hi2 > [class^=tilde] {
+  top: -1.5em;
+}
+.jianpu-note.hi3 > [class^=tilde] {
+  top: -1.8em;
+}
+.jianpu-note > .tilde1 {
+  left: -0.5em;
+}
+.jianpu-note > .tilde2 {
+  left: -0.85em;
+  transform: scaleX(1.5);
+}
+.jianpu-note > .tilde3 {
+  left: -1em;
+  transform: scaleX(1.8);
+}
+.jianpu-note > .tilde4 {
+  left: -1.3em;
+  transform: scaleX(2.5);
+}
+.jianpu-note > .tilde5 {
+  left: -1.5em;
+  transform: scaleX(3.2);
+}
+.jianpu-note > .tilde6 {
+  left: -1.8em;
+  transform: scaleX(3.8);
 }

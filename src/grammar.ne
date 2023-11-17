@@ -40,7 +40,8 @@ function processText (d) {
 @lexer lexer
 
 # 乐段, 最后一个 %bar 是可选的
-piece -> (bar _):+ {% processPiece %}
+piece -> _ {% id %}
+  | (bar _):+ {% processPiece %}
   | (bar _):* lastBar {% processPiece2 %}
 
 # 小节
