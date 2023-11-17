@@ -1,4 +1,4 @@
-import { Lexer, Parser, LexerState, Grammar } from 'nearley'
+import * as Nearley from 'nearley'
 import initGrammar from './grammar.js'
 import initLexer from './lexer.js'
 import initHtml from './to-html.js'
@@ -7,15 +7,15 @@ import { Vdom } from './vdom.js'
 export type Ast = any
 
 export class Jianpu {
-  public lexer: Lexer
-  public parser: Parser
+  public lexer: Nearley.Lexer
+  public parser: Nearley.Parser
   private genHtml: ((ast: Ast) => Vdom)
-  private initState: { [key: string]: any; lexerState: LexerState }
+  private initState: { [key: string]: any; lexerState: Nearley.LexerState }
   constructor() {
     const lexer = this.lexer = initLexer()
     const grammar = initGrammar(lexer)
-    const compiledGrammar = Grammar.fromCompiled(grammar)
-    this.parser = new Parser(compiledGrammar)
+    const compiledGrammar = Nearley.Grammar.fromCompiled(grammar)
+    this.parser = new Nearley.Parser(compiledGrammar)
     this.initState = this.parser.save()
     this.genHtml = initHtml()
   }
@@ -32,12 +32,12 @@ export class Jianpu {
     return this.parser.results[0]
   }
 
-  public toHtml(code: string): string {
+  public toHtml(code: string): Vdom {
     this.parser.restore(this.initState)
     const ast = this.parse(code)
     console.dir(ast, { depth: 10 })
-    const str = this.genHtml(ast).toString()
-    console.log(str)
-    return str
+    const vdom = this.genHtml(ast)
+    console.log(vdom.toString())
+    return vdom
   }
 }

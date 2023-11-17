@@ -16,12 +16,12 @@ function processParen (d) {
 }
 function processNote (d) {
   const res = { ...d[1], type: 'note', tilde: !!d[0] }
-  const dotDash = d[2] && d[2][0][1]
+  const dotDash = d[2]?.[0][0][1]
   if (dotDash) {
-    if (dotDash[0].type === 'dot')
-      res.dot = dotDash.length // 附点数
-    else if (dotDash[0].type === 'dash')
-      res.dash = dotDash.length // 横杠数
+    if (dotDash.type === 'dot')
+      res.dot = d[2][0].length // 附点数
+    else if (dotDash.type === 'dash')
+      res.dash = d[2][0].length // 横杠数
   }
   return res
 }
@@ -29,7 +29,7 @@ function processPitch (d) {
   return {
     value: d[1].value, // 音名
     alter: !d[0] ? 0 : d[0][0].type === 'sharp' ? 1 : -1, // 变化音: +1 升高半音, -1 降低半音
-    octave: !d[2] ? 0 : d[2][0][0].type.slice(0, 2) === 'hi' ? d[2][0].length : -d[2][0].length, // octave: +1 升高八度, -1 降低八度
+    octave: !d[2] ? 0 : d[2][0].type === 'hi_octave' ? d[2][0].value.length : -d[2][0].value.length, // octave: +1 升高八度, -1 降低八度
   }
 }
 function processText (d) {
@@ -55,10 +55,10 @@ group -> note {% id %}
 paren -> %lparen _ ((note | paren) _):+ %rparen {% processParen %}
 
 # 音符
-note -> (%tilde _):? pitch ((_ %dot:+) | (_ %dash:+)):? {% processNote %}
+note -> (%tilde _):? pitch ((_ %dot):+ | (_ %dash):+):? {% processNote %}
 
 # 音高
-pitch -> (%sharp | %flat):? %note_name (%hi_octave:+ | %lo_octave:+):? {% processPitch %}
+pitch -> (%sharp | %flat):? %note_name (%hi_octave | %lo_octave):? {% processPitch %}
 
 # 空格, tab 以及换行
 _ -> (%space | %newline):* {% d => '' %}

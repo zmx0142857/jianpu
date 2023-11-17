@@ -46,8 +46,12 @@ const passedExamples: Example[] = [
   },
   {
     input: '(11) | 2 1 4 | 3 - (11) | 2 1 5 | 4 -',
-    html: '<div class="jianpu"><div class="jianpu-bar"><div class="jianpu-group"><span class="jianpu-note ul">1</span><span class="jianpu-note ul">1</span></div></div><div class="jianpu-bar"><span class="jianpu-note">2</span><span class="jianpu-note">1</span><span class="jianpu-note">4</span></div><div class="jianpu-bar"><span class="jianpu-note">3 - </span><div class="jianpu-group"><span class="jianpu-note ul">1</span><span class="jianpu-note ul">1</span></div></div><div class="jianpu-bar"><span class="jianpu-note">2</span><span class="jianpu-note">1</span><span class="jianpu-note">5</span></div><div class="jianpu-bar"><span class="jianpu-note">4 - </span></div></div>',
-  }
+    html: '<div class="jianpu"><div class="jianpu-bar"><div class="jianpu-group"><span class="jianpu-note ul">1</span><span class="jianpu-note ul">1</span></div></div><div class="jianpu-bar"><span class="jianpu-note">2</span><span class="jianpu-note">1</span><span class="jianpu-note">4</span></div><div class="jianpu-bar"><span class="jianpu-note">3</span><span class="jianpu-note">-</span><div class="jianpu-group"><span class="jianpu-note ul">1</span><span class="jianpu-note ul">1</span></div></div><div class="jianpu-bar"><span class="jianpu-note">2</span><span class="jianpu-note">1</span><span class="jianpu-note">5</span></div><div class="jianpu-bar"><span class="jianpu-note">4</span><span class="jianpu-note">-</span></div></div>',
+  },
+  {
+    input: "(#4'' . . 1,,- - -)",
+    html: '<div class="jianpu"><div class="jianpu-bar"><div class="jianpu-group"><span class="jianpu-note hi2 ul">4</span><span class="jianpu-note ul">..</span><span class="jianpu-note lo2 ul">1</span><span class="jianpu-note ul">- - -</span></div></div></div>',
+  },
 ]
 
 // no idea why this fails ˉ\_(ツ)_/ˉ
@@ -58,7 +62,7 @@ const todoExamples: Example[] = [
 ]
 
 export const examples: Example[] = [
-  // ...passedExamples,
-  ...todoExamples,
+  ...passedExamples,
+  // ...todoExamples,
   // ...whyThisFails,
 ]

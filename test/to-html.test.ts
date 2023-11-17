@@ -21,7 +21,7 @@ describe('test nearley to-tex', () => {
   examples.forEach((item, index) => {
     traceLex(item.input, jianpu.lexer)
     it(`#${index} ${item.desc ? `[${item.desc}] ` : ''}${item.input}`, () => {
-      expect(jianpu.toHtml(item.input)).toBe(item.html)
+      expect(jianpu.toHtml(item.input).toString()).toBe(item.html)
     })
   })
 })

@@ -1,0 +1,85 @@
+.jianpu {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+}
+.jianpu-bar {
+  padding: 0 8px;
+  border-right: .08em solid currentColor;
+  margin-bottom: 2em;
+}
+.jianpu-group {
+  display: inline-flex;
+}
+.jianpu-group + .jianpu-group {
+  margin-left: .1em;
+}
+.jianpu-note {
+  position: relative;
+  padding: 0 .1em;
+}
+
+/* 下划线 */
+.jianpu-note.ul::after,
+.jianpu-note.ul2::after,
+.jianpu-note.ul3::after {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: .08em;
+  content: '';
+  left: 0;
+  bottom: .08em;
+}
+.jianpu-note.ul::after {
+  box-shadow: 0 .08em;
+}
+.jianpu-note.ul2::after {
+  box-shadow: 0 .08em, 0 0.25em;
+}
+.jianpu-note.ul3::after {
+  box-shadow: 0 .08em, 0 0.25em, 0 0.42em;
+}
+
+/* 上下加点 */
+.jianpu-note.hi::before,
+.jianpu-note.lo::before,
+.jianpu-note.hi2::before,
+.jianpu-note.lo2::before,
+.jianpu-note.hi3::before,
+.jianpu-note.lo3::before {
+  position: absolute;
+  display: block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.jianpu-note.hi::before,
+.jianpu-note.lo::before {
+  content: '.';
+}
+.jianpu-note.hi::before {
+  top: -1em;
+}
+.jianpu-note.lo::before {
+  bottom: -.76em;
+}
+.jianpu-note.hi2::before,
+.jianpu-note.lo2::before {
+  content: ':';
+}
+.jianpu-note.hi2::before {
+  top: -1em;
+}
+.jianpu-note.lo2::before {
+  bottom: -1.2em;
+}
+.jianpu-note.hi3::before,
+.jianpu-note.lo3::before {
+  content: '⋮';
+}
+.jianpu-note.hi3::before {
+  top: -1em;
+}
+.jianpu-note.lo3::before {
+  bottom: -1.3em;
+}
