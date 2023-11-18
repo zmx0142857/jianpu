@@ -1,17 +1,45 @@
-name: Build and Deploy
+name: Deploy
+
 on:
   push:
-    branches: main
+    tags:
+      - 'v*'
+
 jobs:
-  build-and-deploy:
+  deploy-gh-pages:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout/@v3
-    - name: build and deploy
-      uses: JamesIves/github-pages/deploy-action@master
-      env:
-        ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        BRANCH: gh-pages
-        FOLDER: "."
-        BUILD_SCRIPT: npm i && npm build
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # submodules: true # enable git submodules
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.4.0
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies and build
+        run: pnpm install && pnpm build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        with:
+          branch: gh-pages
+          folder: "."
