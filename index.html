@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jianpu Playground</title>
+  <link rel="stylesheet" href="./index.css">
+  <link rel="stylesheet" href="./jianpu.css">
+</head>
+<body>
+
+<h1 contenteditable>简谱</h1>
+<p class="p-subtitle" contenteditable>副标题</p>
+<div class="p-html-output"></div>
+
+<div class="p-drawer">
+  <button class="p-drawer-btn">三</button>
+  <div class="p-drawer-group">
+    <textarea class="p-textarea p-input" rows="8" cols="60" placeholder="输入简谱..."></textarea>
+    <textarea class="p-textarea p-str-output" rows="8" cols="60" disabled style="display:none"></textarea>
+    <button class="btn p-print-btn" style="display:none">打印</button>
+  </div>
+</div>
+
+<script type="module">
+import { Jianpu } from './dist/index.js'
+
+const jianpu = new Jianpu()
+
+const $ = el => document.querySelector(el)
+const input = $('.p-input')
+const strOutput = $('.p-str-output')
+const htmlOutput = $('.p-html-output')
+const drawerBtn = $('.p-drawer-btn')
+const drawerGroup = $('.p-drawer-group')
+const printBtn = $('.p-print-btn')
+
+const render = (value) => {
+  try {
+    const html = jianpu.toHtml(value).toString()
+    htmlOutput.innerHTML = html
+    strOutput.style.display = 'none'
+  } catch (err) {
+    console.error(err)
+    let index = err.message.indexOf(' Instead,')
+    if (index === -1) index = undefined
+    strOutput.value = err.message.slice(0, index)
+    strOutput.style.display = 'block'
+  }
+}
+
+const main = () => {
+  input.value = "(5,5,) | 6, 5, 1 | 7, - (5,5,) | 6, 5, 2 | 1 - (5,5,) |\n5 3 1 | 7, 6, (44)| 3 1 2 | 1 - -"
+  render(input.value)
+  let timer
+  input.addEventListener('input', (e) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      render(e.target.value)
+    }, 500)
+  })
+  drawerBtn.addEventListener('click', () => {
+    drawerBtn.parentElement.classList.toggle('hidden')
+  })
+  if (typeof window.print === 'function') {
+    printBtn.style.display = 'inline-block'
+    printBtn.addEventListener('click', () => {
+      try {
+        window.print()
+      } catch (err) {
+        alert('您的设备似乎不支持打印！\n' + err)
+      }
+    })
+  }
+}
+
+main()
+</script>
+</body>
+</html>
