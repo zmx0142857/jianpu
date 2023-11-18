@@ -8,7 +8,6 @@ Simple music markup language.
 
     $ cd jianpu
     $ pnpm i       # install dependencies
-    $ pnpm nearley # generate grammar file
     $ pnpm build   # build jianpu.js
 
     $ pnpm i -g serve     # install a local static server
