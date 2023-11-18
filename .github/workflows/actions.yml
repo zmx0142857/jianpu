@@ -36,7 +36,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies and build
-        run: pnpm install && pnpm build && mkdir -p build && cp -r dist index.html index.css build
+        run: pnpm install && pnpm build && mkdir -p build && cp -r dist index.html index.css jianpu.css build
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.4.3
