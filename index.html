@@ -18,9 +18,71 @@
   <div class="p-drawer-group">
     <textarea class="p-textarea p-input" rows="8" cols="60" placeholder="输入简谱..."></textarea>
     <textarea class="p-textarea p-str-output" rows="8" cols="60" disabled style="display:none"></textarea>
-    <button class="btn p-print-btn" style="display:none">打印</button>
+    <div class="p-drawer-btns">
+      <button class="btn p-help-btn">帮助</button>
+      <button class="btn p-print-btn" style="display:none">打印</button>
+    </div>
   </div>
 </div>
+
+<div class="p-modal">
+  <div class="p-modal-mask"></div>
+  <div class="p-modal-body"></div>
+</div>
+
+<script type="application/template" id="help-modal">
+<div class="p-help-content">
+  <h3>例子</h3>
+  <p>生日歌</p>
+  <pre>(5,5,) | 6, 5, 1 | 7, - (5,5,) | 6, 5, 2 | 1 - (5,5,) |
+5 3 1 | 7, 6, (44)| 3 1 2 | 1 - -</pre>
+  <p>明天会更好</p>
+  <pre>((6667)) ((1' ~6) 6) ((7771')) ((2' ~777)) | ((1'765)) ((~5512)) 3 -</pre>
+  <h3>记号</h3>
+  <table style="max-width: 400px">
+    <tr>
+      <td>音符</td>
+      <td><code>X 1 2 3</code></td>
+      <td>休止</td>
+      <td><code>0</code></td>
+    </tr>
+    <tr>
+      <td>低八度</td>
+      <td><code>X, X,,</code></td>
+      <td>高八度</td>
+      <td><code>X' X''</code></td>
+    </tr>
+    <tr>
+      <td>八分音符</td>
+      <td>(XX)</td>
+      <td>十六分音符</td>
+      <td>((XXXX))</td>
+    </tr>
+    <tr>
+      <td>附点</td>
+      <td><code>X. X..</code></td>
+      <td>横杠</td>
+      <td><code>X- X--</code></td>
+    </tr>
+    <tr>
+      <td>延音</td>
+      <td><code>~X</code></td>
+      <td>小节</td>
+      <td><code>|</code></td>
+    </tr>
+    <tr>
+      <td>升号</td>
+      <td><code>#</code></td>
+      <td>降号</td>
+      <td><code>b</code></td>
+    </tr>
+    <tr>
+      <td>注释</td>
+      <td><code>//</code></td>
+    </tr>
+  </table>
+</div>
+</script>
 
 <script type="module">
 import { Jianpu } from './dist/index.js'
@@ -33,7 +95,28 @@ const strOutput = $('.p-str-output')
 const htmlOutput = $('.p-html-output')
 const drawerBtn = $('.p-drawer-btn')
 const drawerGroup = $('.p-drawer-group')
+const helpBtn = $('.p-help-btn')
 const printBtn = $('.p-print-btn')
+
+const newModal = (container) => {
+  const body = container.querySelector('.p-modal-body')
+  const mask = container.querySelector('.p-modal-mask')
+  const show = (el) => {
+    container.style.display = 'block'
+    const html = $(el).innerText
+    body.innerHTML = html
+  }
+  const hide = () => {
+    container.style.display = 'none'
+  }
+  mask.addEventListener('click', hide)
+  return {
+    container,
+    show,
+    hide,
+  }
+}
+const modal = newModal($('.p-modal'))
 
 const render = (value) => {
   try {
@@ -61,6 +144,9 @@ const main = () => {
   })
   drawerBtn.addEventListener('click', () => {
     drawerBtn.parentElement.classList.toggle('hidden')
+  })
+  helpBtn.addEventListener('click', () => {
+    modal.show('#help-modal')
   })
   if (typeof window.print === 'function') {
     printBtn.style.display = 'inline-block'

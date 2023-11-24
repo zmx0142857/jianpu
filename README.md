@@ -2,7 +2,7 @@
 
 Simple music markup language.
 
-> This repo is under construction.
+Try live demo at: https://zmx0142857.github.io/jianpu
 
 ## Quick start
 
@@ -16,6 +16,8 @@ Simple music markup language.
 Open browser at `http://localhost:1234` and try it yourself!
 
 ## Examples
+
+> This part is under construction...
 
 ```text
 title { "Some Music" }

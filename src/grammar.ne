@@ -61,8 +61,8 @@ note -> (%tilde _):? pitch ((_ %dot):+ | (_ %dash):+):? {% processNote %}
 # 音高
 pitch -> (%sharp | %flat):? %note_name (%hi_octave | %lo_octave):? {% processPitch %}
 
-# 空格, tab 以及换行
-_ -> (%space | %newline):* {% d => '' %}
+# 空格, tab, 换行以及注释
+_ -> (%space | %newline | %comment):* {% d => '' %}
 
 # 文本
 text -> %text %textEnd {% processText %}
