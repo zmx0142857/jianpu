@@ -38,6 +38,9 @@ body {
   color: var(--fg2);
   border: none;
 }
+.btn:not(:last-child) {
+  margin-right: 8px;
+}
 /* firefox scrollbar */
 * {
   scrollbar-width: thin;
@@ -58,6 +61,9 @@ html {
 }
 ::-webkit-scrollbar-track-piece {
   background-color: transparent;
+}
+::selection {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /* page */
@@ -98,7 +104,6 @@ h1, .p-subtitle {
 .p-textarea {
   background-color: transparent;
   color: var(--fg);
-  font-family: Consolas, monospace;
   display: block;
   width: 100%;
   border: none;
@@ -120,10 +125,57 @@ h1, .p-subtitle {
   outline: var(--secondary) 1px solid;
   outline-offset: -1px;
 }
-.p-print-btn {
+.p-drawer-btns {
   position: absolute;
   right: 14px;
   bottom: 4px;
+}
+.p-modal {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+.p-modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, .5);
+}
+.p-modal-body {
+  position: fixed;
+  background-color: var(--bg);
+  border-radius: 16px;
+  padding: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+}
+
+.p-help-content pre,
+.p-help-content code,
+.p-textarea {
+  font-family: Consolas, monospace;
+}
+.p-help-content pre {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--bg2);
+  white-space: pre-wrap;
+}
+.p-help-content table {
+  border-top: 2px solid var(--bd2);
+  border-bottom: 2px solid var(--bd2);
+  margin: 0 auto;
+  width: 80%;
+}
+.p-help-content td {
+  padding: 8px;
+}
+.p-help-content td:nth-child(2n) {
+  background-color: var(--bg2);
 }
 
 @media print {
